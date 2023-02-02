@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"
+      integrity="sha512-pUhApVQtLbnpLtJn6DuzDD5o2xtmLJnJ7oBoMsBnzOkVkpqofGLGPaBJ6ayD2zQe3lCgCibhJBi4cj5wAxwVKA=="
+      crossorigin="anonymous" 
+      referrerpolicy="no-referrer">
+    </script>
+
+    <img id="qrious">
+
     <script>
-      function generateQRCode(text) {
-        var qrcode = new QRCode("qrcode", {
-          text: text,
-          width: 128,
-          height: 128,
-          colorDark: "#000000",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H
-        });
-      }
+      var qr = new QRious();
+      qr.background = 'green';
+      qr.backgroundAlpha = 0.8;
+      qr.foreground = 'blue';
+      qr.foregroundAlpha = 0.8;
+      qr.level = 'H';
+      qr.padding = 25;
+      qr.size = 500;
+      qr.value = 'https://github.com/neocotic/qrious';
     </script>
   </head>
-  <body onload="generateQRCode('{{ .QrImage }}')">
-    <div id="qrcode"></div>
-  </body>
 </html>
