@@ -34,21 +34,19 @@ func LogInHandler(w http.ResponseWriter, r *http.Request){
 //This functions retrives the image of the qr code of the wss page
 func GetQrCode() (string) {
 	//Initializing Browser Context (if headless mode is not disabled this doesn't work)
-	ctx, cancel := chromedp.NewExecAllocator(
+	execCtx, _ := chromedp.NewExecAllocator(
 		context.Background(),
 		append(chromedp.DefaultExecAllocatorOptions[:], chromedp.Flag("headless", false))...
 	)
-	defer cancel()
 
-	ctx, cancel = chromedp.NewContext(ctx)
-	defer cancel()
+	browserCtx, _ := chromedp.NewContext(execCtx)
 
 	//var data map
 	var data map[string]string
 
 	log.Println("Initializing Browser...")
 
-	err := chromedp.Run(ctx,
+	err := chromedp.Run(browserCtx,
 		chromedp.Navigate("http://web.whatsapp.com/"),
 		chromedp.WaitEnabled("._10aH-", chromedp.ByQuery),
 		chromedp.Attributes("/html/body/div[1]/div/div/div[3]/div[1]/div/div/div[2]/div", &data),
