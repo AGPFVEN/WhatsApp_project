@@ -21,18 +21,24 @@ type logInData struct{
 }
 
 func LogInHandler(w http.ResponseWriter, r *http.Request){
-	tmpQrPng := GetQrCode()
-	log.Println(tmpQrPng)
+	//Retrive qr from what's app web page
+	tmpQrPng, logged_browser_ctx := GetQrCode()
 
+	//-------------------------test---------------------------------------------------------------
+	//check if context works fine, see how to
+
+	//Qr data into the page data
 	p := logInData{QrImage: tmpQrPng}
-	log.Println(p)
 
+	//Load html file with qr code
 	t, _ := template.ParseFiles("log_in.html")
 	fmt.Println(t.Execute(w, p))
+
+
 }
 
 //This functions retrives the image of the qr code of the wss page
-func GetQrCode() (string) {
+func GetQrCode() (string, context.Context) {
 	//Initializing Browser Context (if headless mode is not disabled this doesn't work)
 	execCtx, _ := chromedp.NewExecAllocator(
 		context.Background(),
@@ -54,8 +60,5 @@ func GetQrCode() (string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return data["data-ref"]
-
-	//http.HandleFunc("/LogIn", logInDataHandler)
-	//http.ListenAndServe(":8000",nil)/html/body/div[1]/div/div/div[3]/div[1]/div/div/div[2]/div
+	return data["data-ref"], browserCtx
 }

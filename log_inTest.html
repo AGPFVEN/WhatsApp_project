@@ -1,34 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     </head>
     
     <body>
-        
-        <p>1</p>
-        <canvas id="canvas"></canvas>
-        <div class="contenedorQR" data-ref="{{ .QrImage }}">
-            <p>2</p>
-        </div>    
-        
-        
-        
-        <script defer type="text/javascript">
-            console.log('Initiated...')
-            var qrcode = new QRCode("test", {
-            text: "http://jindo.dev.naver.com/collie",
-            width: 128,
-            height: 128,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
-        })
-            const contenedorQR = document.querySelector('.contenedorQR');
-            const referenceQR = contenedorQR.getAttribute('data-ref')
-            const QR = new QRCode(contenedorQR, referenceQR)
-            QR.makeCode(referenceQR)
-        </script>
+        <p>Rdy</p>
     </body>
     
 </html>
