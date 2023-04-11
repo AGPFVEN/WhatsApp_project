@@ -1,0 +1,12 @@
+soved:
+    Qr extraction
+    Show qr to user
+
+To do:
+    Session management:
+        figure how it works
+        design plan
+        implentation
+    Instructions management:
+        Design (probably a db aproach)
+        Implementation
