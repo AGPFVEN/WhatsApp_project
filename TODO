@@ -10,3 +10,7 @@ To do:
     Instructions management:
         Design (probably a db aproach)
         Implementation
+
+Try:
+    use chrome sessions to store multiple wss accounts
+    if it works figure out the limit
