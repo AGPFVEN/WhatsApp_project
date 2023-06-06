@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"text/template"
+	"time"
 
 	"github.com/chromedp/chromedp"
 )
@@ -20,11 +21,11 @@ type logInData struct{
 	QrImage string
 }
 
-func LogInHandler(w http.ResponseWriter, r *http.Request){
+func LogInHandler(w http.ResponseWriter, r *http.Request) {
 	//Retrive qr from what's app web page
-	tmpQrPng, logged_browser_ctx := GetQrCode()
+	tmpQrPng, _ := GetQrCode()
 
-	//-------------------------test---------------------------------------------------------------
+	//-------------------------test--------------------------
 	//check if context works fine, see how to
 
 	//Qr data into the page data
@@ -33,8 +34,18 @@ func LogInHandler(w http.ResponseWriter, r *http.Request){
 	//Load html file with qr code
 	t, _ := template.ParseFiles("log_in.html")
 	fmt.Println(t.Execute(w, p))
+}
 
-
+func RetriveNumber(givenCtx context.Context) (){
+	//This function checks the number of the user
+	err := chromedp.Run(givenCtx,
+		chromedp.WaitVisible("._3ndVb", chromedp.ByQuery),
+		chromedp.Click("/div/div/div[4]/header/div[2]/div/span/div[3]/div/span/svg"),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	time.Sleep(5 * time.Second)
 }
 
 //This functions retrives the image of the qr code of the wss page

@@ -1,16 +1,17 @@
-soved:
+solved:
     Qr extraction
     Show qr to user
 
 To do:
-    Session management:
-        figure how it works
-        design plan
-        implentation
     Instructions management:
         Design (probably a db aproach)
         Implementation
+    Session management (future):
+        figure how it works
+        design plan
+        implentation
 
 Try:
+    autoregister
     use chrome sessions to store multiple wss accounts
     if it works figure out the limit

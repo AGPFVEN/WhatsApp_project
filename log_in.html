@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
@@ -11,10 +11,11 @@
 </head>
 
 <body>
-	<img alt="Código QR" id="codigo">
+	<p>Aviso</p>
+	<img alt="Code QR" id="qr_code">
 	<script>
 		new QRious({
-			element: document.querySelector("#codigo"),
+			element: document.querySelector("#qr_code"),
 			value: "{{ .QrImage }}", // La URL o el texto
 			size: 200,
 			backgroundAlpha: 0, // 0 para fondo transparente
