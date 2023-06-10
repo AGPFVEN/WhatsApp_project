@@ -23,7 +23,7 @@ type logInData struct{
 
 func LogInHandler(w http.ResponseWriter, r *http.Request) {
 	//Retrive qr from what's app web page
-	tmpQrPng, _ := GetQrCode()
+	tmpQrPng, logInCtx := GetQrCode()
 
 	//-------------------------test--------------------------
 	//check if context works fine, see how to
@@ -34,17 +34,24 @@ func LogInHandler(w http.ResponseWriter, r *http.Request) {
 	//Load html file with qr code
 	t, _ := template.ParseFiles("log_in.html")
 	fmt.Println(t.Execute(w, p))
+
+	//Return client's number
+	//RetriveNumber(logInCtx)
+	//clientsNumber := RetriveNumber(logInCtx)
+
+	print(logInCtx)
 }
 
 func RetriveNumber(givenCtx context.Context) (){
 	//This function checks the number of the user
 	err := chromedp.Run(givenCtx,
-		chromedp.WaitVisible("._3ndVb", chromedp.ByQuery),
-		chromedp.Click("/div/div/div[4]/header/div[2]/div/span/div[3]/div/span/svg"),
+		chromedp.WaitEnabled("._3ndVb", chromedp.ByQuery),
+		//chromedp.Click("/html/body/div[1]/div/div/div[4]/header/div[2]/div/span/div[3]/div/span/svg"),
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
+	print("Waiting done")
 	time.Sleep(5 * time.Second)
 }
 
