@@ -22,7 +22,7 @@ type logInData struct{
 }
 
 func LogInHandler(w http.ResponseWriter, r *http.Request) {
-	//Retrive qr from what's app web page
+	//Retrive qr from what'sapp web page
 	tmpQrPng, logInCtx := GetQrCode()
 
 	//-------------------------test--------------------------
