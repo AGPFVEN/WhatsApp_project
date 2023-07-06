@@ -13,5 +13,5 @@ To do:
 
 Try:
     autoregister
-    use chrome sessions to store multiple wss accounts
+    use chrome sessions to store multiple wss accounts (this is the unique solution)
     if it works figure out the limit
