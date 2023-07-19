@@ -5,6 +5,6 @@ import (
 )
 
 func main(){
-	http.HandleFunc("/", LogInPageLoader)
+	http.HandleFunc("/", InitialPageLoader)
 	http.ListenAndServe(":8000", nil)
 }
