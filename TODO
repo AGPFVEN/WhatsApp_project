@@ -7,11 +7,9 @@ To do:
         Design (probably a db aproach)
         Implementation
     Session management (future):
-        figure how it works
-        design plan
-        implentation
+        End chromedp and 
 
 Try:
     autoregister
-    use chrome sessions to store multiple wss accounts (this is the unique solution)
-    if it works figure out the limit
+        at closing chromedp driver, if it is closed gracefuly I can retirve the context to future drivers
+        What I need is to make a good LogInHandler function that starts and ends the browser in the same function

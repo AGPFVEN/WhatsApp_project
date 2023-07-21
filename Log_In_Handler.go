@@ -14,11 +14,14 @@ type logInData struct{
 }
 
 func InitialPageLoader(w http.ResponseWriter, r *http.Request) {
+	qrData := make(chan string)
+
 	//Retrive qr from what'sapp web page
-	tmpQrPng, initialCtx := GetQrCode()	
+	go RegistrationHandler(qrData)
 
 	//Qr data into the page data
-	p := logInData{QrImage: tmpQrPng}
+	p := logInData{QrImage: <-qrData}
+	close(qrData)
 
 	//Load html file with qr code
 	t, err := template.ParseFiles("log_in.html")
@@ -30,42 +33,11 @@ func InitialPageLoader(w http.ResponseWriter, r *http.Request) {
 	if t.Execute(w, p) != nil{
 		print(err)
 	}
-
-	//Continue Registration
-	go RegistrationHandler(initialCtx)
 }
 
-func RegistrationHandler(registrationCtx context.Context) (){
-	println("hit")
-	SelectContact(registrationCtx)
-	println("hit")
-
-	userPhoneNumber := RetriveNumber(registrationCtx)
-	log.Println(userPhoneNumber)
-
-	//Another function (store session or context function)
-	chromedp.Cancel(registrationCtx)
-}
-
-//This function retrives the user phone number
-func RetriveNumber(givenCtx context.Context) (string){
-	//This function checks the number of the user using a channel
-	contactCtx := SelectContact(givenCtx)
-
-	var data map[string] string
-	err := chromedp.Run(contactCtx,
-		chromedp.Attributes("/html/body/div[1]/div/div/div[3]/div[1]/span/div/span/div/div[2]/div[5]/div/div/div[11]/div[1]/div/div[2]/div[1]/div/span[1]", &data),
-	)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return data["title"]
-}
-
-//This functions retrives the image of the qr code of the wss page
-func GetQrCode() (string, context.Context) {
+func RegistrationHandler(ch chan string) (){
 	//Initializing Browser Context (if headless mode is not disabled this doesn't work)
+	log.Println("Initializing Browser...")
 	allocatorCtx, allocatorCancel := chromedp.NewExecAllocator(
 		context.Background(),
 		append(
@@ -79,11 +51,41 @@ func GetQrCode() (string, context.Context) {
 	browserCtx, browserCancel := chromedp.NewContext(allocatorCtx)
 	defer browserCancel()
 
-	//var data map
+	//Extract QR data from wss page
+	GetQrCode(ch, browserCtx)
+
+	//Retrive User's phone number
+	userPhoneNumber := RetriveNumber(browserCtx)
+	log.Printf("Users phone number: %s", userPhoneNumber)
+
+	//Another function (store session or context function)
+	chromedp.Cancel(browserCtx)
+}
+
+//This function retrives the user phone number
+func RetriveNumber(givenCtx context.Context) (string){
+	//This function checks the number of the user using a channel
+	SelectContact(givenCtx)
+
+	var data map[string] string
+	err := chromedp.Run(givenCtx,
+		chromedp.Attributes("/html/body/div[1]/div/div/div[3]/div[1]/span/div/span/div/div[2]/div[5]/div/div/div[11]/div[1]/div/div[2]/div[1]/div/span[1]", &data),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return data["title"]
+}
+
+//This functions retrives the image of the qr code of the wss page
+func GetQrCode(auxiliarCh chan string, browserCtx context.Context) () {
+	log.Println("Extracting QR data...")
+
+	//Where the attributes data will be stored
 	var data map[string]string
 
-	log.Println("Initializing Browser...")
-
+	//Go to WSS webpage, wait for QR and extract its information
 	err := chromedp.Run(browserCtx,
 		chromedp.Navigate("http://web.whatsapp.com/"),
 		chromedp.WaitEnabled("._10aH-", chromedp.ByQuery),
@@ -93,5 +95,6 @@ func GetQrCode() (string, context.Context) {
 		log.Fatal(err)
 	}
 
-	return data["data-ref"], browserCtx
+	//Pass the QR data information to the channel
+	auxiliarCh <- data["data-ref"]
 }
