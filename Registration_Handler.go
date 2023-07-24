@@ -48,6 +48,7 @@ func RegistrationHandler(ch chan string) (){
 	)
 	defer allocatorCancel()
 
+	//Browser is closed at the end of this function
 	browserCtx, browserCancel := chromedp.NewContext(allocatorCtx)
 	defer browserCancel()
 
@@ -57,9 +58,6 @@ func RegistrationHandler(ch chan string) (){
 	//Retrive User's phone number
 	userPhoneNumber := RetriveNumber(browserCtx)
 	log.Printf("Users phone number: %s", userPhoneNumber)
-
-	//Another function (store session or context function)
-	chromedp.Cancel(browserCtx)
 }
 
 //This function retrives the user phone number

@@ -13,3 +13,33 @@ Try:
     autoregister
         at closing chromedp driver, if it is closed gracefuly I can retirve the context to future drivers
         What I need is to make a good LogInHandler function that starts and ends the browser in the same function
+
+AutofillStates          
+DevToolsActivePort       
+'Last Version'              
+OriginTrials     
+ShaderCache        
+'Subresource Filter'
+CertificateRevocation   
+FileTypePolicies         
+'Local State'               
+PKIMetadata      
+SingletonCookie    
+Variations
+ClientSidePhishing      
+FirstPartySetsPreloaded  
+MEIPreload                 
+pnacl            
+SingletonLock      
+WidevineCdm
+'Crowd Deny'            
+GrShaderCache           
+OnDeviceHeadSuggestModel  
+'Safe Browsing'  
+SingletonSocket   
+ZxcvbnData
+Default                 
+hyphen-data              
+OptimizationHints          
+SafetyTips       
+SSLErrorAssistant
