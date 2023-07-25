@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "preLaunchTask": "rm -r myUsers/* && go build && ./WhatsApp_project",
             "name": "Launch Package",
             "type": "go",
             "request": "launch",
-            "mode": "auto",
             "program": "${fileDirname}"
         }
     ]
