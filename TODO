@@ -11,3 +11,11 @@ To do:
         Pass to blob (bit64?)
         Encrypt blob
         Upload blob (INSERT)
+
+To do (later):
+    Put constants
+    Use WalkDir instead of 
+
+To run:
+    go build
+    ./WhatsApp_project

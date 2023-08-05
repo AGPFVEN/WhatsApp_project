@@ -63,8 +63,10 @@ func RegistrationDataHandler(ch chan string) (){
 	//This is done in order to let the whatsapp web page to synchronize with the mobile app
 	time.Sleep(1 * time.Minute)
 
+	chromedp.Cancel(browserCtx)
+
 	//Next step of the process
-	go HandlerRegistrationUpload(userPhoneNumber, allocatorCtx)
+	go HandlerRegistrationUpload(userPhoneNumber, allocatorCtx, browserCtx)
 }
 
 //This function retrives the user phone number
