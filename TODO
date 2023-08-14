@@ -4,17 +4,17 @@ solved:
         Show qr to user
         Session management (get browser session from user)
         Autoregister (get browser data and phone number)
+        Compress files
 
 To do:
     Registration:
-        Compress files
-        Pass to blob (bit64?)
-        Encrypt blob
         Upload blob (INSERT)
 
 To do (later):
     Put constants
-    Use WalkDir instead of 
+    Use filestreamline in Mysql (figure out how it works in the production system)
+    create circular queue of actions system
+    Disable headless option
 
 To run:
     go build

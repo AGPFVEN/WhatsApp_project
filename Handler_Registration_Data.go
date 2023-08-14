@@ -38,7 +38,7 @@ func InitialPageLoader(w http.ResponseWriter, r *http.Request) {
 
 func RegistrationDataHandler(ch chan string) (){
 	//Initializing Browser Context (if headless mode is not disabled this doesn't work)
-	log.Println("Initializing Browser...")
+	log.Println(PromptStartBrowser)
 	allocatorCtx, allocatorCancel := chromedp.NewExecAllocator(
 		context.Background(),
 		append(

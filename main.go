@@ -1,12 +1,13 @@
 package main
 
 import (
-	"net/http"
+	//"net/http"
 )
 
 func main(){
-	http.HandleFunc("/", InitialPageLoader)
-	//http.HandleFunc("/", my_test)
+	dbTest()
+	
+	//http.HandleFunc(webPagesHome, InitialPageLoader)
 
-	http.ListenAndServe(":8000", nil)
+	//http.ListenAndServe(":8000", nil)
 }

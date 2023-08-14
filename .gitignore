@@ -1,3 +1,4 @@
 /myUsers/*
 .vscode/launch.json
 .vscode/
+credential.go
