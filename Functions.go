@@ -3,6 +3,7 @@ package main
 import (
 	"archive/zip"
 	"context"
+	"encoding/binary"
 	"io"
 	"io/fs"
 	"log"
@@ -143,3 +144,18 @@ func MyUnzip(destiny string, origin string) (){
 		log.Println()
 	}
 }
+
+func FileToBinary(path string) (FileInBinary any) {
+	fileReader, err := os.Open(path)
+	if err != nil{
+		panic(err)
+	}
+	defer fileReader.Close()
+
+	var result any
+	
+
+	err = binary.Write(fileReader, binary.BigEndian, result)
+
+	return result
+}	
