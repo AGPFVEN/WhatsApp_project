@@ -38,9 +38,7 @@ func ConnectDB() (*sql.DB ,error){
 }
 
 func dbTest() {
-	println("j")
 	println(os.Getenv("DNS"))
-	println("j")
 	db, err := ConnectDB()
 	if err != nil {
 		log.Fatal(err)
