@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-    "database/sql"
-    "log"
-    "os"
+	"database/sql"
+	"log"
+	"os"
 
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/go-sql-driver/mysql"
 )
 
 func HandlerRegistrationUpload(phoneNumber string, isAllocatorClosed context.Context, isBrowserClosed context.Context) (){
@@ -17,15 +17,27 @@ func HandlerRegistrationUpload(phoneNumber string, isAllocatorClosed context.Con
 
 	//Compress browser sesion
 	MyZip("compress.zip", "./myUsers")
-
 }
+
+//Idea: After creating a file check its size and use it in driver and session (All in handler)
 
 func ConnectDB() (*sql.DB ,error){
 	//Connect to database
-    db, err := sql.Open("mysql", os.Getenv("DSN"))
-    if err != nil {
-        log.Fatalf("failed to connect: %v", err)
+    myConfig, err := mysql.ParseDSN(os.Getenv("DSN"))
+    if err != nil{
+        log.Fatal(err)
     }
+
+    myConfig.MaxAllowedPacket = 90 << 20 //Less than 89.2MB
+
+    println(myConfig.MaxAllowedPacket)
+    
+    myConn, err:= mysql.NewConnector(myConfig)
+    if err != nil{
+        log.Fatal(err)
+    }
+
+    db := sql.OpenDB(myConn)
 
 	//Ping to test connection
     if err := db.Ping(); err != nil {
@@ -38,7 +50,6 @@ func ConnectDB() (*sql.DB ,error){
 }
 
 func dbTest() {
-	println(os.Getenv("DNS"))
 	db, err := ConnectDB()
 	if err != nil {
 		log.Fatal(err)
