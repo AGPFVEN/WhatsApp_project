@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 
@@ -21,17 +22,17 @@ func HandlerRegistrationUpload(phoneNumber string, isAllocatorClosed context.Con
 
 //Idea: After creating a file check its size and use it in driver and session (All in handler)
 
-func ConnectDB() (*sql.DB ,error){
+func ConnectDbWithSizePacket(myMaxAllowedPacket int) (*sql.DB ,error){
 	//Connect to database
     myConfig, err := mysql.ParseDSN(os.Getenv("DSN"))
     if err != nil{
         log.Fatal(err)
     }
 
-    myConfig.MaxAllowedPacket = 90 << 20 //Less than 89.2MB
+    myConfig.MaxAllowedPacket = myMaxAllowedPacket
 
-    println(myConfig.MaxAllowedPacket)
-    
+    fmt.Printf("%+v\n", myConfig)
+
     myConn, err:= mysql.NewConnector(myConfig)
     if err != nil{
         log.Fatal(err)
@@ -50,11 +51,6 @@ func ConnectDB() (*sql.DB ,error){
 }
 
 func dbTest() {
-	db, err := ConnectDB()
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	//Register file in Mysql system
     filename := "compress.zip"
 
@@ -63,18 +59,33 @@ func dbTest() {
 		log.Fatal(err)
 	}
 
+	db, err := ConnectDbWithSizePacket(len(b))
+	if err != nil {
+		log.Fatal(err)
+	}
+
     //Creating query
-    stmt, err := db.Prepare("INSERT INTO testDB1 (pnumber, pzip) VALUES (?, ?)")
+    stmt, err := db.Prepare("SET GLOBAL max_allowed_packet=?;")
+    if err != nil{
+        log.Fatal(err)
+    }
+
+    //Execute query
+    res, err := stmt.Exec(len(b))
+    if err != nil{
+        log.Fatal(err)
+    }
+    println("Insert id: ", res)
+
+    stmt, err = db.Prepare("INSERT INTO testDB1 (pnumber, pzip) VALUES (?, ?)")
     if err != nil{
         log.Fatal(err)
     }
     pNumber := "000000000"
 
-    //Execute query
-    res, err := stmt.Exec(pNumber, b)
+    res, err = stmt.Exec(pNumber, b)
     if err != nil{
-        panic(err)
+        log.Fatal(err)
     }
-
     println("Insert id: ", res)
 }
