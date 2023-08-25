@@ -3,11 +3,14 @@ package main
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 
-	"github.com/go-sql-driver/mysql"
+    _ "github.com/go-sql-driver/mysql"
+)
+
+const (
+    currPacketSize = 30 * 1024 * 1024 //30MiB
 )
 
 func HandlerRegistrationUpload(phoneNumber string, isAllocatorClosed context.Context, isBrowserClosed context.Context) (){
@@ -20,38 +23,39 @@ func HandlerRegistrationUpload(phoneNumber string, isAllocatorClosed context.Con
 	MyZip("compress.zip", "./myUsers")
 }
 
-//Idea: After creating a file check its size and use it in driver and session (All in handler)
-
-func ConnectDbWithSizePacket(myMaxAllowedPacket int) (*sql.DB ,error){
-	//Connect to database
-    myConfig, err := mysql.ParseDSN(os.Getenv("DSN"))
+func dbTest() {
+    //Open File to read its content
+    filename := "compress.zip"
+    fileDescriptor, err := os.Open(filename)
     if err != nil{
-        log.Fatal(err)
+        log.Fatal("Error opening file\n", err)
     }
+    defer fileDescriptor.Close()
 
-    myConfig.MaxAllowedPacket = myMaxAllowedPacket
+    //Create buffer to read chunks of the file
+    buf:= make([]byte, currPacketSize)
 
-    fmt.Printf("%+v\n", myConfig)
+    //Connect to DB
+    db, err := sql.Open("mysql", os.Getenv("DSN"))	
+    if err != nil {
+		log.Fatal(err)
+	}
 
-    myConn, err:= mysql.NewConnector(myConfig)
-    if err != nil{
-        log.Fatal(err)
-    }
-
-    db := sql.OpenDB(myConn)
-
-	//Ping to test connection
+	//Ping to test connection to DB
     if err := db.Ping(); err != nil {
         log.Fatalf("failed to ping: %v", err)
     }
-
     log.Println("Successfully connected to PlanetScale!")
 
-	return db, nil
-}
 
-func dbTest() {
-	//Register file in Mysql system
+    //First read (this read uses insert)
+    readFile, err := fileDescriptor.Read(buf)
+
+    //Insert
+    stmt, err := db.Prepare("INSERT INTO testDB")
+
+	/*
+    //Register file in Mysql system
     filename := "compress.zip"
 
 	b, err := os.ReadFile(filename)
@@ -59,33 +63,21 @@ func dbTest() {
 		log.Fatal(err)
 	}
 
-	db, err := ConnectDbWithSizePacket(len(b))
-	if err != nil {
-		log.Fatal(err)
-	}
 
     //Creating query
-    stmt, err := db.Prepare("SET GLOBAL max_allowed_packet=?;")
+    stmt, err := db.Prepare("INSERT INTO testDB1 (pnumber, pzip) VALUES (?, ?)")
     if err != nil{
         log.Fatal(err)
     }
 
-    //Execute query
-    res, err := stmt.Exec(len(b))
-    if err != nil{
-        log.Fatal(err)
-    }
-    println("Insert id: ", res)
-
-    stmt, err = db.Prepare("INSERT INTO testDB1 (pnumber, pzip) VALUES (?, ?)")
-    if err != nil{
-        log.Fatal(err)
-    }
+    println(stmt)
+    log.Printf("Value of my b %v\n", )
     pNumber := "000000000"
-
-    res, err = stmt.Exec(pNumber, b)
+    
+    res, err := stmt.Exec(pNumber, b)
     if err != nil{
         log.Fatal(err)
     }
-    println("Insert id: ", res)
+    println("Insert id: ", res)    
+    */
 }
