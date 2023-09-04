@@ -51,7 +51,7 @@ func dbTest() {
     //First read (this read uses insert)
     readFile, err := fileDescriptor.Read(buf)
 
-    //Insert
+    //Insert (I am reading how to use this insert in order to introduce the zip by chunks)
     stmt, err := db.Prepare("INSERT INTO testDB")
 
 	/*
