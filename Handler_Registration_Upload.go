@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-    _ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 const (
@@ -25,12 +25,13 @@ func HandlerRegistrationUpload(phoneNumber string, isAllocatorClosed context.Con
 
 func dbTest() {
     //Open File to read its content
+    testNumber := "000000001"
     filename := "compress.zip"
-    fileDescriptor, err := os.Open(filename)
+    filePointer, err := os.Open(filename)
     if err != nil{
         log.Fatal("Error opening file\n", err)
     }
-    defer fileDescriptor.Close()
+    defer filePointer.Close()
 
     //Create buffer to read chunks of the file
     buf:= make([]byte, currPacketSize)
@@ -45,14 +46,49 @@ func dbTest() {
     if err := db.Ping(); err != nil {
         log.Fatalf("failed to ping: %v", err)
     }
-    log.Println("Successfully connected to PlanetScale!")
+    log.Printf("Successfully connected to PlanetScale!\n\n")
 
 
     //First read (this read uses insert)
-    readFile, err := fileDescriptor.Read(buf)
+    fileDescriptor, err := filePointer.Read(buf)
+    if err != nil{
+        log.Fatal(err)
+    }
+    println("First read completed")
 
     //Insert (I am reading how to use this insert in order to introduce the zip by chunks)
-    stmt, err := db.Prepare("INSERT INTO testDB")
+    stmt, err := db.Prepare("INSERT INTO testDB values (?, ?)")
+    if err != nil{
+        log.Fatal(err)
+    }
+
+    queryResult, err:= stmt.Exec(testNumber, buf)
+    if err != nil{
+        log.Fatal(err)
+    }
+    println("First query executed")
+    log.Println(queryResult.RowsAffected())
+    println()
+
+    //Update (Upload file in chunks)
+    for fileDescriptor > 0{
+        fileDescriptor, err = filePointer.Read(buf)
+        if err != nil{
+            log.Fatal(err)
+        }
+        println("Another read completed")
+
+        stmt, err = db.Prepare("update testDB1 set pzip = concat(pzip, ?) where pnumber = ?")
+        if err != nil{
+            log.Fatal(err)
+        }
+        queryResult, err:= stmt.Exec(buf, testNumber)
+        if err != nil{
+            log.Fatal(err)
+        }
+        log.Println(queryResult.RowsAffected())
+        println()
+    }
 
 	/*
     //Register file in Mysql system
