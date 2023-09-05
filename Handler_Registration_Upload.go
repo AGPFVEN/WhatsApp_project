@@ -57,12 +57,12 @@ func dbTest() {
     println("First read completed")
 
     //Insert (I am reading how to use this insert in order to introduce the zip by chunks)
-    stmt, err := db.Prepare("INSERT INTO testDB values (?, ?)")
+    stmt, err := db.Prepare("INSERT INTO testDB1 values (?, ?)")
     if err != nil{
         log.Fatal(err)
     }
 
-    queryResult, err:= stmt.Exec(testNumber, buf)
+    queryResult, err:= stmt.Exec(testNumber, 010)
     if err != nil{
         log.Fatal(err)
     }
@@ -89,31 +89,4 @@ func dbTest() {
         log.Println(queryResult.RowsAffected())
         println()
     }
-
-	/*
-    //Register file in Mysql system
-    filename := "compress.zip"
-
-	b, err := os.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-
-    //Creating query
-    stmt, err := db.Prepare("INSERT INTO testDB1 (pnumber, pzip) VALUES (?, ?)")
-    if err != nil{
-        log.Fatal(err)
-    }
-
-    println(stmt)
-    log.Printf("Value of my b %v\n", )
-    pNumber := "000000000"
-    
-    res, err := stmt.Exec(pNumber, b)
-    if err != nil{
-        log.Fatal(err)
-    }
-    println("Insert id: ", res)    
-    */
 }
