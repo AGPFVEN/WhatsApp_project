@@ -13,8 +13,9 @@ To do:
 To do (later):
     Put constants
         Handler_Registration_Upload.go ()
+    Minimize the folder size (userdata saved in database - I think the key is in the cookies)
     Use filestreamline in Mysql (figure out how it works in the production system)
-    create circular queue of actions system
+    Create circular queue of actions system
     Disable headless option
 
 To run:

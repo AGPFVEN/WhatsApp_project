@@ -51,6 +51,7 @@ func dbTest() {
 
     //First read (this read uses insert)
     fileDescriptor, err := filePointer.Read(buf)
+    //_, err = filePointer.Read(buf)
     if err != nil{
         log.Fatal(err)
     }
@@ -69,6 +70,20 @@ func dbTest() {
     println("First query executed")
     log.Println(queryResult.RowsAffected())
     println()
+
+    /*
+    //Testing
+    stmt, err = db.Prepare("update testDB1 set pzip = concat(pzip, ?) where pnumber = ?")
+    if err != nil{
+        log.Fatal(err)
+    }
+    queryResult, err = stmt.Exec(010, testNumber)
+    if err != nil{
+        log.Fatal(err)
+    }
+    log.Println(queryResult.RowsAffected())
+    println()
+    */
 
     //Update (Upload file in chunks)
     for fileDescriptor > 0{
@@ -89,4 +104,7 @@ func dbTest() {
         log.Println(queryResult.RowsAffected())
         println()
     }
+
+    //Use between runs
+    //delete from testDB1 where pnumber = "000000001";
 }
