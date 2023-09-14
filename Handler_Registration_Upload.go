@@ -23,7 +23,7 @@ func HandlerRegistrationUpload(phoneNumber string, isAllocatorClosed context.Con
 	MyZip("compress.zip", "./myUsers")
 }
 
-func dbTest() {
+func dbTest() { 
     //Open File to read its content
     testNumber := "000000001"
     filename := "compress.zip"
@@ -71,20 +71,6 @@ func dbTest() {
     log.Println(queryResult.RowsAffected())
     println()
 
-    /*
-    //Testing
-    stmt, err = db.Prepare("update testDB1 set pzip = concat(pzip, ?) where pnumber = ?")
-    if err != nil{
-        log.Fatal(err)
-    }
-    queryResult, err = stmt.Exec(010, testNumber)
-    if err != nil{
-        log.Fatal(err)
-    }
-    log.Println(queryResult.RowsAffected())
-    println()
-    */
-
     //Update (Upload file in chunks)
     for fileDescriptor > 0{
         fileDescriptor, err = filePointer.Read(buf)
@@ -107,4 +93,18 @@ func dbTest() {
 
     //Use between runs
     //delete from testDB1 where pnumber = "000000001";
+
+    /*
+    //Testing
+    stmt, err = db.Prepare("update testDB1 set pzip = concat(pzip, ?) where pnumber = ?")
+    if err != nil{
+        log.Fatal(err)
+    }
+    queryResult, err = stmt.Exec(010, testNumber)
+    if err != nil{
+        log.Fatal(err)
+    }
+    log.Println(queryResult.RowsAffected())
+    println()
+    */
 }
