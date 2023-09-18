@@ -95,6 +95,20 @@ func dbTest() {
     //delete from testDB1 where pnumber = "000000001";
 
     /*
+    Investigate
+
+    Console:
+    2023/09/18 12:43:35 Successfully connected to PlanetScale!
+
+    First read completed
+    First query executed
+    2023/09/18 12:43:35 1 <nil>
+
+    Another read completed
+    2023/09/18 12:43:42 Error 1105 (HY000): target: wss_test.-.primary: vttablet: rpc error: code = Unavailable desc = error reading from server: EOF
+    */
+
+    /*
     //Testing
     stmt, err = db.Prepare("update testDB1 set pzip = concat(pzip, ?) where pnumber = ?")
     if err != nil{
