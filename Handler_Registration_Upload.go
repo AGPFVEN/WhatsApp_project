@@ -9,6 +9,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+//THE SOLUTION SEEMS TO BE SFTP!!!! (need to research)
+
 const (
     currPacketSize = 30 * 1024 * 1024 //30MiB
 )
@@ -41,6 +43,7 @@ func dbTest() {
     if err != nil {
 		log.Fatal(err)
 	}
+    
 
 	//Ping to test connection to DB
     if err := db.Ping(); err != nil {
