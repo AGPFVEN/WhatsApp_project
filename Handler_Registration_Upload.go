@@ -9,11 +9,11 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-//THE SOLUTION SEEMS TO BE SFTP!!!! (need to research)
-
 const (
     currPacketSize = 30 * 1024 * 1024 //30MiB
 )
+
+//Env var OneDrive auth code (ONEDRIVE_AUTH_CODE)
 
 func HandlerRegistrationUpload(phoneNumber string, isAllocatorClosed context.Context, isBrowserClosed context.Context) (){
 	//Check if the browser is closed
@@ -26,6 +26,7 @@ func HandlerRegistrationUpload(phoneNumber string, isAllocatorClosed context.Con
 }
 
 func dbTest() { 
+    //Getenv("ONEDRIVE_AUTH_ID") 
     //Open File to read its content
     testNumber := "000000001"
     filename := "compress.zip"
