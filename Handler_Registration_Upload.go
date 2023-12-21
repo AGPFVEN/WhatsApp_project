@@ -2,15 +2,13 @@ package main
 
 import (
 	"context"
-	"database/sql"
+	"net/http"
+
+	//"database/sql"
 	"log"
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
-)
-
-const (
-    currPacketSize = 30 * 1024 * 1024 //30MiB
 )
 
 //Env var OneDrive auth code (ONEDRIVE_AUTH_CODE)
@@ -26,7 +24,21 @@ func HandlerRegistrationUpload(phoneNumber string, isAllocatorClosed context.Con
 }
 
 func dbTest() { 
-    //Getenv("ONEDRIVE_AUTH_ID") 
+    print("https://login.live.com/oauth20_authorize.srf?client_id={"+
+    os.Getenv("ONEDRIVE_AUTH_ID")+
+    "}&scope={readwrite offline_access}&response_type=code&redirect_uri={" + 
+    webPagesHome + "}\n")
+    //Getenv("ONEDRIVE_AUTH_ID")
+    resp, err := http.Get("https://login.live.com/oauth20_authorize.srf?client_id={"+
+        os.Getenv("ONEDRIVE_AUTH_ID")+
+        "}&scope={readwrite offline_access}&response_type=code&redirect_uri={}")
+    if err != nil{
+        log.Fatal("Error requesting OneDrive authorization token\n", err)
+    }
+
+    log.Printf("Type: %T, value: %v", resp, resp)
+
+    /*
     //Open File to read its content
     testNumber := "000000001"
     filename := "compress.zip"
@@ -93,7 +105,7 @@ func dbTest() {
         }
         log.Println(queryResult.RowsAffected())
         println()
-    }
+    }*/
 
     //Use between runs
     //delete from testDB1 where pnumber = "000000001";
