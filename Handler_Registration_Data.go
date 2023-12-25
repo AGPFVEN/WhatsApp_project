@@ -14,6 +14,19 @@ type logInData struct{
 	QrImage string
 }
 
+func InitialPageLoaderTest(w http.ResponseWriter, r *http.Request) {
+	//Load html loading file
+	t, err := template.ParseFiles("log_inTest.html")
+	if err != nil {
+		print(err)
+	}
+	
+	//Execute template into user browser
+	if t.Execute(w, nil) != nil{
+		print(err)
+	}
+}
+
 func InitialPageLoader(w http.ResponseWriter, r *http.Request) {
 	qrData := make(chan string)
 

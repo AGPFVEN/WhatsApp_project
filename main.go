@@ -6,6 +6,6 @@ func main(){
 	
 	//Test: Using http.post can I send the zip file to the db?
 	
-	http.HandleFunc(webPagesHome, InitialPageLoader)
+	http.HandleFunc(webPagesHome, InitialPageLoaderTest)
 	http.ListenAndServe(":8000", nil)
 }
