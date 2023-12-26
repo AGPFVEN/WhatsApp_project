@@ -11,6 +11,11 @@ To do:
         -Loading page initial page
         -Registration page
 
+        -Métodos de pago:
+            -ApplePay
+            -Tarjeta Bancaria
+            -
+
         -Solution: Async Web Request Flow
             -Tools:
                 - javascript -> XMLHttpRequest
