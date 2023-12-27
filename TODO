@@ -14,12 +14,11 @@ To do:
         -Métodos de pago:
             -ApplePay
             -Tarjeta Bancaria
-            -
 
         -Solution: Async Web Request Flow
             -Tools:
                 - javascript -> XMLHttpRequest
-                - golang ->
+                - golang     -> POST?
 
     Registration:
         Upload blob (INSERT)
