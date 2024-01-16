@@ -1,4 +1,7 @@
-solved:
+Annotations:
+    - Static has all the css and js files
+
+Solved:
     Registration:
         Qr extraction
         Show qr to user
@@ -19,6 +22,9 @@ To do:
             -Tools:
                 - javascript -> XMLHttpRequest
                 - golang     -> POST?
+
+                - js send    -> http.FileServe
+                - js minimize-> Build tool (WebPack or Rollup)
 
     Registration:
         Upload blob (INSERT)

@@ -16,13 +16,13 @@ type logInData struct{
 
 func InitialPageLoaderTest(w http.ResponseWriter, r *http.Request) {
 	//Load html loading file
-	t, err := template.ParseFiles("log_inTest.html")
-	if err != nil {
+	page_template, err := template.ParseFiles("testing.html")
+	if err != nil { 
 		print(err)
 	}
 	
 	//Execute template into user browser
-	if t.Execute(w, nil) != nil{
+	if page_template.Execute(w, nil) != nil{
 		print(err)
 	}
 }
