@@ -1,14 +1,6 @@
 Annotations:
     - Static has all the css and js files
 
-Solved:
-    Registration:
-        Qr extraction
-        Show qr to user
-        Session management (get browser session from user)
-        Autoregister (get browser data and phone number)
-        Compress files
-
 To do:
     Create frontend:
         -Design page
@@ -29,7 +21,7 @@ To do:
                 - js minimize-> Build tool (WebPack or Rollup)
 
     Registration:
-        Upload blob (INSERT)
+        Upload wss files
 
 To do (later):
     Put constants
@@ -37,6 +29,14 @@ To do (later):
     Use OneDrive as a file database
     Create circular queue of actions system
     Disable headless option
+
+Solved:
+    Registration:
+        Qr extraction
+        Show qr to user
+        Session management (get browser session from user)
+        Autoregister (get browser data and phone number)
+        Compress files
 
 To run:
     go build
