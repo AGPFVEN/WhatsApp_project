@@ -21,7 +21,10 @@ To do:
                 - js minimize-> Build tool (WebPack or Rollup)
 
     Registration:
-        Upload wss files
+        Upload wss files:
+            OAuth2 to access Azure
+            Test libary to use API of OneDrive ?
+            Implement Upload and Download of OneDrive
 
 To do (later):
     Put constants
