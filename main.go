@@ -47,11 +47,11 @@ import (
 	// URL. Exchange will do the handshake to retrieve the
 	// initial access token. The HTTP Client returned by
 	// conf.Client will refresh the token as necessary.
-	print("hi")
+	print("hi\n")
 	code := os.Getenv("ONEDRIVE_TOKEN_REDEEM_CODE")
-	//if _, err := fmt.Scan(&code); err != nil {
-		//log.Fatal(err)
-	//}
+	if _, err := fmt.Scan(&code); err != nil {
+		log.Fatal(err)
+	}
 
 	// Use the custom HTTP client when requesting a token.
 	httpClient := &http.Client{Timeout: 2 * time.Second}
@@ -62,13 +62,15 @@ import (
 		log.Fatal(err)
 	}
 
+	print("Exchange done\n")
+
 	client := conf.Client(ctx, tok)
 	fmt.Println("It worked")
 
 	//----------------------------OneDrive Mine------------------
 	lib_client := onedrive.NewClient(client)
-	lib_ctx := context.Background()
-	somenoi, err := lib_client.DriveItems.List(lib_ctx, "")
+	log.Printf("CONTEXT %+V", ctx)
+	somenoi, err := lib_client.DriveItems.List(ctx, "")
 	if err != nil{
 		log.Fatal(err)
 	}
