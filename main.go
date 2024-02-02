@@ -49,13 +49,17 @@ import (
 	// conf.Client will refresh the token as necessary.
 	print("hi\n")
 	code := os.Getenv("ONEDRIVE_TOKEN_REDEEM_CODE")
-	if _, err := fmt.Scan(&code); err != nil {
-		log.Fatal(err)
-	}
+	//if _, err := fmt.Scan(&code); err != nil {
+		//log.Fatal(err)
+	//}
+
+	print("before use cus http\n")
 
 	// Use the custom HTTP client when requesting a token.
 	httpClient := &http.Client{Timeout: 2 * time.Second}
 	ctx = context.WithValue(ctx, oauth2.HTTPClient, httpClient)
+
+	print("before ex\n")
 
 	tok, err := conf.Exchange(ctx, code)
 	if err != nil {
@@ -65,7 +69,7 @@ import (
 	print("Exchange done\n")
 
 	client := conf.Client(ctx, tok)
-	fmt.Println("It worked")
+	fmt.Println("It worked\n")
 
 	//----------------------------OneDrive Mine------------------
 	lib_client := onedrive.NewClient(client)
