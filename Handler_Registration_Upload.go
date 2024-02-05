@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/agpfven/WhatsApp_project/config"
 )
 
 //Env var OneDrive auth code (ONEDRIVE_AUTH_CODE)
@@ -27,7 +27,7 @@ func dbTest() {
     print("https://login.live.com/oauth20_authorize.srf?client_id={"+
     os.Getenv("ONEDRIVE_AUTH_ID")+
     "}&scope={readwrite offline_access}&response_type=code&redirect_uri={" + 
-    webPagesHome + "}\n")
+    config.webPagesHome + "}\n")
     //Getenv("ONEDRIVE_AUTH_ID")
     resp, err := http.Get("https://login.live.com/oauth20_authorize.srf?client_id={"+
         os.Getenv("ONEDRIVE_AUTH_ID")+

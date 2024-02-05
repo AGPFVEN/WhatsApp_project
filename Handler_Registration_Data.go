@@ -7,6 +7,7 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/agpfven/WhatsApp_project/config"
 	"github.com/chromedp/chromedp"
 )
 
@@ -51,7 +52,7 @@ func InitialPageLoader(w http.ResponseWriter, r *http.Request) {
 
 func RegistrationDataHandler(ch chan string) (){
 	//Initializing Browser Context (if headless mode is not disabled this doesn't work)
-	log.Println(PromptStartBrowser)
+	log.Println(config.PromptStartBrowser)
 	allocatorCtx, allocatorCancel := chromedp.NewExecAllocator(
 		context.Background(),
 		append(
