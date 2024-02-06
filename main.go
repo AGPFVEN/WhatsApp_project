@@ -14,9 +14,21 @@ package main
 //http.ListenAndServe(":8000", nil)
 //}
 import (
+	"net/http"
+
+	"github.com/agpfven/WhatsApp_project/config"
 )
 
  func main(){
+	// Load configs
+	oauth2Config := config.LoadOauthConfig()
+
+	// Create router
+	mux := http.NewServeMux()
+
+	// Define routes
+	mux.HandleFunc(config.WebPagesHome, )
+
 	// Previous code--------------------------------------------
 	//Request token code
 	//ctx := context.Background()
