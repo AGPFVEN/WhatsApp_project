@@ -13,6 +13,12 @@ func GenerateStateOauthCookie(w http.ResponseWriter) string {
 	rand.Read(b)
 	state := base64.URLEncoding.EncodeToString(b)
 	cookie := http.Cookie{
-		
+		Name:	"oauthstate",
+		Value:	state,
+		Expires: expiration,
+		HttpOnly: true,
 	}
+	http.SetCookie(w, &cookie)
+
+	return state
 }
