@@ -17,17 +17,14 @@ import (
 	"net/http"
 
 	"github.com/agpfven/WhatsApp_project/config"
+	"github.com/agpfven/WhatsApp_project/controller"
 )
 
  func main(){
-	// Load configs
-	oauth2Config := config.LoadOauthConfig()
-
-	// Create router
-	mux := http.NewServeMux()
-
 	// Define routes
-	mux.HandleFunc(config.WebPagesHome, )
+	http.HandleFunc(config.WebPagesHome, controller.OnedriveLogin)
+
+	http.ListenAndServe(":3000", nil)
 
 	// Previous code--------------------------------------------
 	//Request token code

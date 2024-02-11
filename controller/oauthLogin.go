@@ -2,14 +2,13 @@ package controller
 
 import (
 	"net/http"
+
+	"github.com/agpfven/WhatsApp_project/config"
 )
 
 func OnedriveLogin(w http.ResponseWriter, r *http.Request){
-	if r.Method != "GET" {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
+	onedriveConfig := config.LoadOauthConfig()
+	url := onedriveConfig.AuthCodeURL("randomstate")
 
-	//Create oauthState cookie
-	oauthState := uti
+	http.Redirect(w, r, url, http.StatusSeeOther)
 }
