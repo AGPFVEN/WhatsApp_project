@@ -6,6 +6,7 @@ import (
 	"github.com/agpfven/WhatsApp_project/config"
 )
 
+//Only admin logs in
 func OnedriveLogin(w http.ResponseWriter, r *http.Request){
 	onedriveConfig := config.LoadOauthConfig()
 	url := onedriveConfig.AuthCodeURL("randomstate")
