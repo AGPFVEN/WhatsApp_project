@@ -23,6 +23,7 @@ import (
  func main(){
 	// Define routes
 	http.HandleFunc(config.WebPagesHome, controller.OnedriveLogin)
+	http.HandleFunc(config.WebPagesHome + "callback", controller.OnedriveCallback)
 
 	http.ListenAndServe(":3000", nil)
 
