@@ -27,6 +27,8 @@ To do:
             Test libary to use API of OneDrive ?
             Implement Upload and Download of OneDrive
             https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-client-creds-grant-flow
+            https://stackoverflow.com/questions/57397552/azure-ad-oauth-client-credentials-grant-flow-with-web-api-authorizeattribute-rol
+            
 To do (later):
     Put constants
         Handler_Registration_Upload.go ()
